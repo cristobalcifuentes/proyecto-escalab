@@ -14,11 +14,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cristobal.escalab.exception.ModeloNotFoundException;
 import com.cristobal.escalab.models.entity.DayHourHand;
 import com.cristobal.escalab.service.interfaces.IDayHourHandService;
 
 @RestController
 @RequestMapping("/day-hourhand")
+
 public class DayHourHandRestController {
 	
 	@Autowired
@@ -36,6 +38,9 @@ public class DayHourHandRestController {
 	public ResponseEntity<DayHourHand> listarPorId(@PathVariable("id") Integer id){
 		
 		DayHourHand dayHourHand = dayHourHandService.leerPorId(id);
+		if (dayHourHand == null) {
+			throw new ModeloNotFoundException("ID NO ENCONTRADO" + id);
+		}
 		return new ResponseEntity<DayHourHand>(dayHourHand, HttpStatus.OK);
 	}
 	
@@ -64,6 +69,9 @@ public class DayHourHandRestController {
 	public ResponseEntity<DayHourHand> obtenerDayHourHandPorCampos(@RequestBody DayHourHand dayHourHand){
 		
 		DayHourHand sub = dayHourHandService.obtenerDayHourHandPorCampos(dayHourHand);
+		if (sub.getDay() == null) {
+			throw new ModeloNotFoundException("DayHourHand NO ENCONTRADO" + dayHourHand);
+		}
 		return new ResponseEntity<DayHourHand>(sub, HttpStatus.OK);
 	}
 	

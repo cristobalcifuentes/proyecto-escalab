@@ -1,8 +1,5 @@
 package com.cristobal.escalab;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cristobal.escalab.models.entity.ResetToken;
-import com.cristobal.escalab.models.entity.User;
 import com.cristobal.escalab.service.interfaces.ILoginService;
 import com.cristobal.escalab.service.interfaces.IResetTokenService;
 

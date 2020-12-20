@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cristobal.escalab.exception.ModeloNotFoundException;
 import com.cristobal.escalab.models.entity.User;
 import com.cristobal.escalab.service.interfaces.IUserService;
 
@@ -36,6 +37,9 @@ public class UserRestController {
 	public ResponseEntity<User> listarPorId(@PathVariable("id") Integer id){
 		
 		User user = userService.leerPorId(id);
+		if (user == null) {
+			throw new ModeloNotFoundException("ID NO ENCONTRADO" + id);
+		}
 		return new ResponseEntity<User>(user, HttpStatus.OK);
 	}
 	

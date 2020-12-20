@@ -43,6 +43,7 @@ public class SubjectRestController {
 	@PostMapping
 	public ResponseEntity<Subject> registrar(@RequestBody Subject subject){
 		
+		System.out.println(subject);
 		Subject sub = subjectService.registrar(subject);
 		return new ResponseEntity<Subject>(sub, HttpStatus.OK);
 	}

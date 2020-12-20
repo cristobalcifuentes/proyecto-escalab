@@ -10,7 +10,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -19,9 +21,13 @@ import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
-import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
+
+
+
 
 @Configuration
+@EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Value("${security.signing-key}")
@@ -66,18 +72,15 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 		http
 		.cors()
 		.and()
-		.csrf().disable()
 		.sessionManagement()
-        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+		.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 		.and()
-		.authorizeRequests()
-		.antMatchers("/v2/api-docs/**").permitAll()
-		.antMatchers("**/swagger-ui.html").permitAll()
-		.antMatchers("/tokens/**").permitAll()
-		//.anyRequest().permitAll()
-		.anyRequest().authenticated() 	
-		;
-		
+		.httpBasic()
+		.realmName(securityRealm)
+		.and()
+		.csrf()
+		.disable();
+	
 	}
 	
 	@Bean
@@ -89,6 +92,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Bean
 	public TokenStore tokenStore() {
+		
+		//return new JwtTokenStore(accessTokenConverter());
 		return new JdbcTokenStore(this.dataSource);
 		
 	}

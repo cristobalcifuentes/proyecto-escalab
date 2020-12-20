@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cristobal.escalab.DTO.ProfesorDetalleDTO;
+import com.cristobal.escalab.exception.ModeloNotFoundException;
 import com.cristobal.escalab.models.entity.Subject;
 import com.cristobal.escalab.models.entity.Teacher;
 import com.cristobal.escalab.service.interfaces.ITeacherService;
@@ -43,6 +45,9 @@ public class TeacherRestController {
 	public ResponseEntity<Teacher> listarPorId(@PathVariable("id") Integer id) {
 
 		Teacher teacher = teacherService.leerPorId(id);
+		if (teacher == null) {
+			throw new ModeloNotFoundException("ID NO ENCONTRADO" + id);
+		}
 		return new ResponseEntity<Teacher>(teacher, HttpStatus.OK);
 	}
 	
@@ -79,6 +84,22 @@ public class TeacherRestController {
 
 		List<Subject> subjects = teacherService.obtenerListadoRamos(id);
 		return new ResponseEntity<List<Subject>>(subjects, HttpStatus.OK);
+	}
+	
+	@GetMapping("detalle/{id}")
+	public ResponseEntity<ProfesorDetalleDTO> detalleSubject(@PathVariable int id) {
+
+		
+		Teacher teacher = teacherService.leerPorId(id);
+		Integer asociados = teacherService.subjectAsociados(id);
+		List<Subject> subjects = teacherService.obtenerListadoRamos(id);
+		if (teacher == null) {
+			throw new ModeloNotFoundException("ID NO ENCONTRADO" + id);
+		}
+		ProfesorDetalleDTO profesorDetalle = new ProfesorDetalleDTO(teacher, asociados, subjects);
+		
+		
+		return new ResponseEntity<ProfesorDetalleDTO>(profesorDetalle, HttpStatus.OK);
 	}
 
 }

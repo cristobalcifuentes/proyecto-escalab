@@ -21,8 +21,8 @@ INSERT INTO day_hour_hand (day_hour_hand_id, day_id, hour_hand_id) VALUES(12, 2,
 INSERT INTO day_hour_hand (day_hour_hand_id, day_id, hour_hand_id) VALUES(13, 3, 3);
 INSERT INTO day_hour_hand (day_hour_hand_id, day_id, hour_hand_id) VALUES(14, 4, 3);
 INSERT INTO day_hour_hand (day_hour_hand_id, day_id, hour_hand_id) VALUES(15, 5, 3);
-INSERT INTO role (role_id, role) VALUES(1, 'administrator');
-INSERT INTO role (role_id, role) VALUES(2, 'student');
+INSERT INTO role (role_id, role) VALUES(1, 'ADMIN');
+INSERT INTO role (role_id, role) VALUES(2, 'USER');
 INSERT INTO enabled (enabled_id, enabled) VALUES(1, 'activo');
 INSERT INTO enabled (enabled_id, enabled) VALUES(2, 'inactivo');
 INSERT INTO users (user_id, rut,last_name,name, password ) VALUES(1, '12345678-9', 'zamorano', 'ivan', '$2a$04$JxvWHwaV9Wiimg21GE6FkudtIzUK4cp6/AcwKnOtGVFKvmEVhKbnG');

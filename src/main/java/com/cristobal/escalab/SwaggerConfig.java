@@ -23,6 +23,7 @@ public class SwaggerConfig {
 	
 	public static final Contact DEFAULT_CONTACT = new Contact("cristobal", "https://github.com/cristobalcifuentes/",
 			"c.cifuentes1990@gmail.com");
+	@SuppressWarnings("rawtypes")
 	public static final ApiInfo DEFAULT_API_INFO = new ApiInfo(" Api Documentation", " Api Documentation", "1.0",
 			"PREMIUM", DEFAULT_CONTACT, "Apache 2.0", "http://www.apache.org/licenses/LICENSE-2.0",
 			new ArrayList<VendorExtension>());
